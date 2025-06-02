@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crushjewels - Luxury Jewelry Showcase</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --secondary-gold: #F7E7CE;
+            --dark-charcoal: #2C2C2C;
+            --light-gray: #F8F9FA;
+        }
+        
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, var(--primary-gold), #E6C547);
+        }
+        
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(212, 175, 55, 0.15) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .admin-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-gold), #E6C547);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="font-playfair text-2xl font-bold text-gray-800 cursor-pointer" onclick="showHome()">
+                        <i class="fas fa-gem text-yellow-600 mr-2"></i>Crushjewels
+                    </h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" onclick="showHome()" class="text-gray-700 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#" onclick="showAbout()" class="text-gray-700 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="#" onclick="showAdmin()" class="text-gray-700 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Admin</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-yellow-600">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" onclick="showHome(); toggleMobileMenu()" class="text-gray-700 hover:text-yellow-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#" onclick="showAbout(); toggleMobileMenu()" class="text-gray-700 hover:text-yellow-600 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#" onclick="showAdmin(); toggleMobileMenu()" class="text-gray-700 hover:text-yellow-600 block px-3 py-2 rounded-md text-base font-medium">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16">
+        <!-- Home View -->
+        <div id="home-view">
+            <!-- Hero Section -->
+            <section class="hero-pattern bg-gradient-to-br from-yellow-50 to-yellow-100 py-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h2 class="font-playfair text-5xl md:text-6xl font-bold text-gray-800 mb-6">
+                        Explore our <span class="text-yellow-600">Crushworthy</span> Jewels
+                    </h2>
+                    <p class="font-inter text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                        Discover exquisite handcrafted jewelry pieces that capture elegance and sophistication. Each piece tells a unique story of artistry and passion.
+                    </p>
+                    <button onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})" class="btn-primary text-white px-8 py-4 rounded-full font-semibold text-lg hover:scale-105 transition-transform">
+                        <i class="fas fa-arrow-down mr-2"></i>Shop Collection
+                    </button>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products" class="py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h3 class="font-playfair text-4xl font-bold text-gray-800 mb-4">Our Collection</h3>
+                        <p class="font-inter text-gray-600 text-lg max-w-2xl mx-auto">
+                            Each piece is carefully curated and crafted to perfection, bringing you the finest jewelry experiences.
+                        </p>
+                    </div>
+                    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Product Detail View -->
+        <div id="product-view" class="hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <button onclick="showHome()" class="text-yellow-600 hover:text-yellow-700 mb-6 flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Collection
+                </button>
+                <div id="product-detail" class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Product detail content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- About View -->
+        <div id="about-view" class="hidden">
+            <section class="py-20 bg-gradient-to-br from-yellow-50 to-white">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="font-playfair text-4xl font-bold text-gray-800 mb-6">About Crushjewels</h2>
+                        <div class="w-24 h-1 gold-gradient mx-auto mb-8"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h3 class="font-playfair text-2xl font-semibold text-gray-800 mb-4">Our Story</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                Crushjewels was born from a passion for creating extraordinary jewelry pieces that capture the essence of elegance and sophistication. Our journey began with a simple belief: that every person deserves to wear something truly special.
+                            </p>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                Each piece in our collection is carefully handcrafted by skilled artisans who understand the art of fine jewelry making. We source only the finest materials and gemstones to ensure that every Crushjewels piece becomes a treasured part of your story.
+                            </p>
+                            <h3 class="font-playfair text-2xl font-semibold text-gray-800 mb-4">Our Mission</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                To create timeless jewelry pieces that celebrate life's most precious moments and empower individuals to express their unique style with confidence and grace.
+                            </p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full w-64 h-64 mx-auto flex items-center justify-center">
+                                <i class="fas fa-gem text-6xl text-yellow-600"></i>
+                            </div>
+                            <div class="mt-8 space-y-4">
+                                <div class="flex items-center justify-center">
+                                    <i class="fas fa-award text-yellow-600 mr-3"></i>
+                                    <span class="text-gray-700 font-medium">Premium Quality</span>
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <i class="fas fa-hand-holding-heart text-yellow-600 mr-3"></i>
+                                    <span class="text-gray-700 font-medium">Handcrafted with Love</span>
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <i class="fas fa-star text-yellow-600 mr-3"></i>
+                                    <span class="text-gray-700 font-medium">Unique Designs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Admin View -->
+        <div id="admin-view" class="hidden">
+            <section class="py-20 bg-gray-100 min-h-screen">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Admin Login -->
+                    <div id="admin-login" class="admin-container rounded-xl p-8 shadow-xl">
+                        <div class="text-center mb-8">
+                            <h2 class="font-playfair text-3xl font-bold text-gray-800 mb-4">Admin Access</h2>
+                            <p class="text-gray-600">Enter the admin password to manage products</p>
+                        </div>
+                        <div class="max-w-md mx-auto">
+                            <input type="password" id="admin-password" placeholder="Enter admin password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent mb-4">
+                            <button onclick="adminLogin()" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">
+                                <i class="fas fa-unlock mr-2"></i>Access Admin Panel
+                            </button>
+                            <p class="text-sm text-gray-500 mt-4 text-center">Default password: admin123</p>
+                        </div>
+                    </div>
+
+                    <!-- Admin Panel -->
+                    <div id="admin-panel" class="hidden">
+                        <div class="admin-container rounded-xl p-8 shadow-xl">
+                            <div class="flex justify-between items-center mb-8">
+                                <h2 class="font-playfair text-3xl font-bold text-gray-800">Product Management</h2>
+                                <button onclick="adminLogout()" class="text-red-600 hover:text-red-700 flex items-center">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                                </button>
+                            </div>
+
+                            <!-- Add Product Form -->
+                            <div class="bg-white rounded-lg p-6 shadow-md mb-8">
+                                <h3 class="font-playfair text-xl font-semibold text-gray-800 mb-4">Add New Product</h3>
+                                <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="product-title" placeholder="Product Title" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" required>
+                                    <input type="number" id="product-price" placeholder="Price ($)" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" required>
+                                    <input type="url" id="product-image" placeholder="Image URL" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent md:col-span-2" required>
+                                    <textarea id="product-description" placeholder="Product Description" rows="3" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent md:col-span-2" required></textarea>
+                                    <textarea id="product-reviews" placeholder="Customer Reviews (one per line)" rows="3" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent md:col-span-2"></textarea>
+                                    <button type="submit" class="btn-primary text-white py-2 px-6 rounded-lg font-semibold md:col-span-2">
+                                        <i class="fas fa-plus mr-2"></i>Add Product
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Existing Products -->
+                            <div class="bg-white rounded-lg p-6 shadow-md">
+                                <h3 class="font-playfair text-xl font-semibold text-gray-800 mb-4">Existing Products</h3>
+                                <div id="admin-products-list" class="space-y-4">
+                                    <!-- Admin products list will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="font-playfair text-2xl font-bold mb-4">
+                        <i class="fas fa-gem text-yellow-500 mr-2"></i>Crushjewels
+                    </h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Creating exquisite jewelry pieces that capture elegance and sophistication. Each piece tells a unique story of artistry and passion.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showHome()" class="text-gray-300 hover:text-yellow-500 transition-colors">Home</a></li>
+                        <li><a href="#" onclick="showAbout()" class="text-gray-300 hover:text-yellow-500 transition-colors">About</a></li>
+                        <li><a href="https://www.instagram.com/crushjewelsshop?igsh=MWRvaTM0NWkxY2d6Mg==" target="_blank" class="text-gray-300 hover:text-yellow-500 transition-colors">Shop on Instagram</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Connect With Us</h4>
+                    <a href="https://www.instagram.com/crushjewelsshop?igsh=MWRvaTM0NWkxY2d2Mg==" target="_blank" class="inline-flex items-center text-gray-300 hover:text-yellow-500 transition-colors">
+                        <i class="fab fa-instagram text-2xl mr-3"></i>
+                        <span>@crushjewelsshop</span>
+                    </a>
+                    <p class="text-gray-300 mt-4">DM us on Instagram to place your order!</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-300">&copy; 2024 Crushjewels. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample products data - this would be replaced with your actual products
+        let products = [
+            {
+                id: 1,
+                title: "Diamond Elegance Necklace",
+                price: 299,
+                image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500",
+                description: "A stunning diamond necklace that captures light beautifully and adds elegance to any outfit. Crafted with precision and featuring high-quality diamonds set in sterling silver.",
+                reviews: [
+                    "Absolutely gorgeous! Exceeded my expectations.",
+                    "The quality is amazing and it looks even better in person.",
+                    "Perfect for special occasions. Highly recommended!"
+                ]
+            },
+            {
+                id: 2,
+                title: "Rose Gold Ring Set",
+                price: 189,
+                image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500",
+                description: "Beautiful rose gold ring set perfect for stacking or wearing individually. Each ring is carefully crafted with attention to detail and comfort.",
+                reviews: [
+                    "Love the rose gold finish! Perfect size and beautiful design.",
+                    "Great quality and the set looks amazing together.",
+                    "Comfortable to wear daily and very stylish."
+                ]
+            },
+            {
+                id: 3,
+                title: "Pearl Drop Earrings",
+                price: 129,
+                image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500",
+                description: "Classic pearl drop earrings with a modern twist. These elegant earrings feature lustrous pearls suspended from delicate gold chains.",
+                reviews: [
+                    "Timeless and elegant. Perfect for both casual and formal wear.",
+                    "The pearls have a beautiful luster and the gold is high quality.",
+                    "Received so many compliments when wearing these!"
+                ]
+            }
+        ];
+
+        // Load products from localStorage if available
+        function loadProducts() {
+            const savedProducts = localStorage.getItem('crushjewels_products');
+            if (savedProducts) {
+                products = JSON.parse(savedProducts);
+            }
+        }
+
+        // Save products to localStorage
+        function saveProducts() {
+            localStorage.setItem('crushjewels_products', JSON.stringify(products));
+        }
+
+        // Display products on the homepage
+        function displayProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = `
+                    <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer" onclick="showProduct(${product.id})">
+                        <div class="aspect-w-4 aspect-h-3 bg-gray-200">
+                            <img src="${product.image}" alt="${product.title}" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-playfair text-xl font-semibold text-gray-800 mb-2">${product.title}</h4>
+                            <p class="text-gray-600 mb-4 line-clamp-2">${product.description}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-2xl text-yellow-600">$${product.price}</span>
+                                <button onclick="event.stopPropagation(); buyNow()" class="btn-primary text-white px-6 py-2 rounded-full font-semibold hover:scale-105 transition-transform">
+                                    <i class="fas fa-shopping-bag mr-2"></i>Buy Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += productCard;
+            });
+        }
+
+        // Show product detail
+        function showProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const detail = document.getElementById('product-detail');
+            detail.innerHTML = `
+                <div>
+                    <img src="${product.image}" alt="${product.title}" class="w-full rounded-xl shadow-lg">
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <h1 class="font-playfair text-4xl font-bold text-gray-800 mb-4">${product.title}</h1>
+                        <p class="text-3xl font-bold text-yellow-600 mb-6">$${product.price}</p>
+                        <p class="text-gray-600 text-lg leading-relaxed mb-8">${product.description}</p>
+                        <button onclick="buyNow()" class="btn-primary text-white px-8 py-4 rounded-full font-semibold text-lg hover:scale-105 transition-transform">
+                            <i class="fas fa-shopping-bag mr-2"></i>Buy Now on Instagram
+                        </button>
+                    </div>
+                    ${product.reviews && product.reviews.length > 0 ? `
+                    <div class="border-t pt-8">
+                        <h3 class="font-playfair text-2xl font-semibold text-gray-800 mb-6">Customer Reviews</h3>
+                        <div class="space-y-4">
+                            ${product.reviews.map(review => `
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex items-center mb-2">
+                                        <div class="flex text-yellow-500">
+                                            ${'<i class="fas fa-star"></i>'.repeat(5)}
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-700">"${review}"</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+
+            showView('product-view');
+        }
+
+        // Buy now function - redirects to Instagram
+        function buyNow() {
+            window.open('https://www.instagram.com/crushjewelsshop?igsh=MWRvaTM0NWkxY2d6Mg==', '_blank');
+        }
+
+        // View management
+        function showView(viewId) {
+            const views = ['home-view', 'product-view', 'about-view', 'admin-view'];
+            views.forEach(view => {
+                document.getElementById(view).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+
+        function showHome() {
+            showView('home-view');
+            displayProducts();
+        }
+
+        function showAbout() {
+            showView('about-view');
+        }
+
+        function showAdmin() {
+            showView('admin-view');
+            document.getElementById('admin-login').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Admin functionality
+        function adminLogin() {
+            const password = document.getElementById('admin-password').value;
+            if (password === 'admin123') {
+                document.getElementById('admin-login').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                displayAdminProducts();
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        function adminLogout() {
+            document.getElementById('admin-login').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+            document.getElementById('admin-password').value = '';
+        }
+
+        function displayAdminProducts() {
+            const list = document.getElementById('admin-products-list');
+            list.innerHTML = '';
+            
+            products.forEach(product => {
+                const productItem = `
+                    <div class="border border-gray-200 rounded-lg p-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <img src="${product.image}" alt="${product.title}" class="w-16 h-16 object-cover rounded-lg">
+                            <div>
+                                <h5 class="font-semibold text-gray-800">${product.title}</h5>
+                                <p class="text-yellow-600 font-bold">$${product.price}</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editProduct(${product.id})" class="text-blue-600 hover:text-blue-700">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteProduct(${product.id})" class="text-red-600 hover:text-red-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += productItem;
+            });
+        }
+
+        // Add product
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newProduct = {
+                id: Date.now(),
+                title: document.getElementById('product-title').value,
+                price: parseFloat(document.getElementById('product-price').value),
+                image: document.getElementById('product-image').value,
+                description: document.getElementById('product-description').value,
+                reviews: document.getElementById('product-reviews').value.split('\n').filter(r => r.trim())
+            };
+            
+            products.push(newProduct);
+            saveProducts();
+            displayAdminProducts();
+            this.reset();
+            alert('Product added successfully!');
+        });
+
+        // Delete product
+        function deleteProduct(productId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                products = products.filter(p => p.id !== productId);
+                saveProducts();
+                displayAdminProducts();
+                alert('Product deleted successfully!');
+            }
+        }
+
+        // Edit product (simple implementation)
+        function editProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            document.getElementById('product-title').value = product.title;
+            document.getElementById('product-price').value = product.price;
+            document.getElementById('product-image').value = product.image;
+            document.getElementById('product-description').value = product.description;
+            document.getElementById('product-reviews').value = product.reviews.join('\n');
+            
+            // Remove the product and let user add it again (simple edit)
+            deleteProduct(productId);
+        }
+
+        // Initialize the website
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            showHome();
+        });
+    </script>
+</body>
+</html>
